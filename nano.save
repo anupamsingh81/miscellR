@@ -1,0 +1,27 @@
+Confusion Matrix and Statistics
+
+          Reference
+Prediction Hypoxia Normal
+   Hypoxia      16      0
+   Normal        6    107
+                                          
+               Accuracy : 0.9535          
+                 95% CI : (0.9015, 0.9827)
+    No Information Rate : 0.8295          
+    P-Value [Acc > NIR] : 1.853e-05       
+                                          
+                  Kappa : 0.8156          
+ Mcnemar's Test P-Value : 0.04123         
+                                          
+            Sensitivity : 0.7273          
+            Specificity : 1.0000          
+         Pos Pred Value : 1.0000          
+         Neg Pred Value : 0.9469          
+             Prevalence : 0.1705          
+         Detection Rate : 0.1240          
+   Detection Prevalence : 0.1240          
+      Balanced Accuracy : 0.8636          
+                                          
+       'Positive' Class : Hypoxia     
+
+

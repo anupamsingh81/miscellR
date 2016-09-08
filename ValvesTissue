@@ -1,0 +1,32 @@
+> summary(Of Tissue Valves)
+      Age        Sex              Case         VALVE          Decade   
+ Min.   : 4.00   F: 837   AVR       :1123   REPAIR:   0   Sixth  :779  
+ 1st Qu.:47.00   M:1370   MVR       : 964   TISSUE:2207   Seventh:536  
+ Median :55.00            DVR       : 116                 Fifth  :351  
+ Mean   :52.86                                            Fourth :175  
+ 3rd Qu.:62.00                                            Third  :166  
+ Max.   :88.00                                            Eighth :142  
+                                                          (Other): 58 
+
+
+summary(Age Of DVR)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  14.00   44.75   54.50   51.43   61.00   77.00 
+> summary(Gender Distribution Of DVR)
+ F  M 
+47 69  
+
+summary(Age Of MVR)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    8.0    44.0    53.0    50.8    61.0    88.0 
+> summary(Gender Distribution Of MVR)
+  F   M 
+454 510 
+
+summary(Age Of AVR)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   4.00   49.00   57.00   54.83   63.00   85.00 
+> summary(Gender Distribution Of AVR)
+  F   M 
+333 790 
+

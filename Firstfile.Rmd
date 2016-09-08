@@ -1,0 +1,113 @@
+# Working with Topol's health Study Wired
+Loading summary function
+```{r}
+library(plyr)
+library(rmarkdown)
+```
+
+Loading required packages
+
+
+```{r}
+library(dplyr)
+library(psych)
+library(ggplot2)
+library(lme4)
+
+```
+
+
+
+
+
+
+First step is to look at data by describe function,drawing histograms,finding outliers, arranging in ascending/descending order(arrange function dplyr)
+we plot the data also ggplot2, see factor in rlationship
+we group data also describeBY,apply and tapply function
+dplyr is important
+selct,filter,rename,arrange,mutate,summarise functions important
+reshape2 important in melting/recasting data
+count and table functions important in 2 by 2 tables,x table , two dichotomous variables
+Learn how to remove rows and columns
+if median and mean are far off there are outliers can use subset or filter and select function to subset data(https://www.youtube.com/watch?v=ckxEZDN1iok)
+
+```{r}
+Topol <- read.csv("~/Desktop/Topol.csv")
+describe(Topol)
+describeBy(Topol$all_claims1,group = Topol$group)
+describeBy(Topol$office_visits1,group = Topol$group)
+t.test(Topol$all_claims1~Topol$group)
+boxplot(Topol$all_claims1)
+```
+Arrange by descending order
+```{r}
+Topol1= arrange(Topol,desc(all_claims1))
+```
+Remove row 1 ,outlier
+t test minus outlier
+Data minus outlier
+```{r}
+Topol2 = Topol1[-1,]
+t.test(Topol2$all_claims1~Topol2$group)
+describe(Topol2$all_claims1)
+
+str(Topol2)
+
+#
+t.test(Topol2$office_visits1~Topol2$group)
+
+hist(Topol2$office_visits1)
+# Poisson model
+x = glm(Topol2$office_visits2~ Topol2$group , data = Topol2, family = poisson)
+confint(x)
+m = confint(x)
+str(m)
+m1 = as.data.frame(m)
+
+# calculating exponential function to transform back
+
+apply(m1,1,exp)
+
+# Differnt way(http://www.sumsar.net/blog/2014/09/bayesian-first-aid-poisson-test/)
+describeBy(Topol2$office_visits1,Topol2$group,)
+?desc
+# we want sum
+tapply(Topol2$office_visits1,Topol2$group,FUN = sum)
+
+# we will cdo Bayesian poisson t test, no. of visits in control = 305, Duration of time = 
+count(Topol2$group)
+
+ visits = c(305,309)
+Duration = c(85,74) # person year
+
+
+library(BayesianFirstAid)
+bayes.poisson.test(visits, Duration, r = 1 ,alternative = "less")
+bayes.poisson.test(visits, Duration, r = 1 ,alternative = "two.sided")
+# Frequentist test
+
+poisson.test(visits, Duration, r = 1 ,alternative = "two.sided")
+
+plot(bayes.poisson.test(visits, Duration, r = 1 ,alternative = "two.sided"))
+
+
+summarise(group_by(Topol2,group), m = sum(Topol2$office_visits1))
+
+# Base R way sum
+count(Topol2$group)
+sum(Topol2$office_visits1[Topol2$group== "control"])
+
+sum = Topol2 %>% select(Topol2$office_visits1)%>%filter(Topol2$group)
+
+# without intercept
+summary(glm(Topol2$office_visits2~ Topol2$group- 1, data = Topol2, family = poisson))
+exp(1.28)
+exp(1.44)
+#
+summarySE(data = Topol2,measurevar = Topol2$office_visits1,groupvars = Topol2$group)
+describeBy(Topol2$office_visits1,group = Topol2$group)
+
+
+```
+
+

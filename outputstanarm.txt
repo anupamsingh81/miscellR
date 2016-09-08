@@ -1,0 +1,64 @@
+stan_lmer(formula = y ~ time:treatment + (1 + time | person), 
+    prior = normal(0, 5), prior_intercept = normal(0, 5))
+
+Estimates:
+               Median MAD_SD
+(Intercept)     4.8    0.2  
+time:treatment -0.5    0.1  
+sigma           0.8    0.0  
+
+Error terms:
+ Groups   Name        Std.Dev. Corr
+ person   (Intercept) 1.33         
+          time        0.67     0.17
+ Residual             0.75         
+Num. levels: person 83 
+
+Sample avg. posterior predictive 
+distribution of y (X = xbar):
+         Median MAD_SD
+mean_PPD 4.5    0.1   
+
+# Lmer normal
+
+Linear mixed model fit by REML ['lmerMod']
+Formula: y ~ time:treatment + (1 + time | person)
+REML criterion at convergence: 1096.093
+Random effects:
+ Groups   Name        Std.Dev. Corr
+ person   (Intercept) 1.3288       
+          time        0.6796   0.15
+ Residual             0.7480       
+Number of obs: 369, groups:  person, 83
+Fixed Effects:
+   (Intercept)  time:treatment  
+        4.8460         -0.4683  
+
+# brms
+
+Family: gaussian (identity) 
+Formula: y ~ time:treatment + (1 + time | person) 
+   Data: newdata (Number of observations: 100) 
+Samples: 2 chains, each with iter = 2000; warmup = 500; thin = 1; 
+         total post-warmup samples = 3000
+   WAIC: 238.8
+ 
+Random Effects: 
+~person (Number of levels: 21) 
+                    Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+sd(Intercept)           1.14      0.24     0.75     1.68        992    1
+sd(time)                0.60      0.32     0.05     1.30        446    1
+cor(Intercept,time)     0.29      0.44    -0.62     0.97       1161    1
+
+Fixed Effects: 
+               Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+Intercept          4.69      0.27     4.13     5.24        748    1
+time:treatment    -0.28      0.22    -0.70     0.17       1140    1
+
+Family Specific Parameters: 
+         Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
+sigma(y)     0.66      0.06     0.55     0.78        922    1
+
+Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
+is a crude measure of effective sample size, and Rhat is the potential 
+scale reduction factor on split chains (at convergence, Rhat = 1).
